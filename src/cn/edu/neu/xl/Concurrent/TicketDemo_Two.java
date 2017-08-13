@@ -1,8 +1,7 @@
 package cn.edu.neu.xl.Concurrent;
 
 /**
- * @description 
- *              多线程卖票的第二种实现方法，资源（Ticket）只是普通的实体类，没有实现多线程的体现。在实际操作的时候引入Runnable并在其run函数里操作资源
+ * @description 多线程卖票的第二种实现方法，资源（Ticket）只是普通的实体类，没有实现多线程的体现。在实际操作的时候引入Runnable并在其run函数里操作资源
  *              。 注意： synchronized锁住方法（run函数）和
  *              synchronized锁住共享变量ticket代码块，最后执行结果是不一样的。
  *              前者从开始到结束只有一个线程执行；后者多个线程交替执行。
