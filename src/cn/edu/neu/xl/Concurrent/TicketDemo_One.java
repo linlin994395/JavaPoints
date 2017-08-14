@@ -13,6 +13,7 @@ package cn.edu.neu.xl.Concurrent;
 class Ticket implements Runnable {
 	private int ticket = 60;
 
+	@Override
 	public void run() {
 		while (true) {
 			synchronized (this) {

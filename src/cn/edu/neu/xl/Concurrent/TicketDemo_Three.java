@@ -8,6 +8,7 @@ package cn.edu.neu.xl.Concurrent;
 class Ticket_Thread extends Thread {
 	private int ticket = 5;
 
+	@Override
 	public void run() {
 		while (true) {
 			if (ticket > 0) {
