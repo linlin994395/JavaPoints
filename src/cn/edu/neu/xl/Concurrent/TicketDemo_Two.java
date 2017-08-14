@@ -39,13 +39,24 @@ public class TicketDemo_Two {
 	public static void main(String[] args) {
 		final Ticket_Sell ticket = new Ticket_Sell();
 		for (int i = 0; i < 50; i++) {
+			//第一种情況
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					ticket.sellTicket();
 				}
 			}, i + 1 + "").start();
+			
+			//第二种情況     因为Thread已经实现了Runnable,所以不用重复实现，但是没办法为线程命名
+		/*	new Thread(){
+				@Override
+				public void run() {
+					ticket.sellTicket();
+				}
+			}.start();*/
 		}
+		
+		
 
 		/*
 		 * new Thread(new Runnable() {
