@@ -28,7 +28,7 @@ class Ticket implements Runnable {
 						+ "： ticket = " + ticket--);
 			}
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -39,6 +39,7 @@ class Ticket implements Runnable {
 public class TicketDemo_One {
 	public static void main(String[] args) {
 		Ticket ticket = new Ticket();
+		//new Thread(null,ticket, "1",Thread.MAX_PRIORITY).start();
 		new Thread(ticket, "1").start();
 		new Thread(ticket, "2").start();
 		new Thread(ticket, "3").start();

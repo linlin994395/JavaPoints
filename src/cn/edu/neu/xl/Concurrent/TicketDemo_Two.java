@@ -26,6 +26,7 @@ class Ticket_Sell {
 				System.out.println("线程" + Thread.currentThread().getName()
 						+ "： ticket = " + ticket--);
 			}
+			
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -40,6 +41,7 @@ public class TicketDemo_Two {
 		final Ticket_Sell ticket = new Ticket_Sell();
 		for (int i = 0; i < 50; i++) {
 			//第一种情況
+			//间接重写run函数
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -48,6 +50,7 @@ public class TicketDemo_Two {
 			}, i + 1 + "").start();
 			
 			//第二种情況     因为Thread已经实现了Runnable,所以不用重复实现，但是没办法为线程命名
+			//直接重写run函数
 		/*	new Thread(){
 				@Override
 				public void run() {
