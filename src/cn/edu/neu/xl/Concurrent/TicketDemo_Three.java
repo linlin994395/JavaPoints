@@ -2,7 +2,7 @@ package cn.edu.neu.xl.Concurrent;
 
 /**
  * @description  每个线程单独卖了5张票，即独立地完成了卖票的任务，但实际应用中，比如火车站售票，需要多个线程去共同完成任务，
- * @author leo
+ * @author xl
  *
  */
 class Ticket_Thread extends Thread {
