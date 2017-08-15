@@ -1,7 +1,7 @@
 package cn.edu.neu.xl.Concurrent;
 
 /**
- * @description  每个线程单独卖了5张票，即独立地完成了卖票的任务，但实际应用中，比如火车站售票，需要多个线程去共同完成任务，
+ * @description  每个线程单独卖了60张票，即独立地完成了卖票的任务，但实际应用中，比如火车站售票，需要多个线程去共同完成任务，
  * @author xl
  *
  */
@@ -44,12 +44,18 @@ class Ticket_Thread extends Thread {
 		while (true) {
 			//ticket是共享变量，所以有关ticket的操作都应该加锁
 			if (ticket == 0) {
-				System.out.println("线程" + Thread.currentThread().getName()
+				System.out.println("线程组  " + Thread.currentThread().getThreadGroup().getName()
+						+" 线程   "+Thread.currentThread().getName()
+						+" 优先级  "+Thread.currentThread().getPriority()
+						+" 状态  "+Thread.currentThread().getState()
 						+ ": 抱歉，票已售完");
 				return;
 			}
 			
-			System.out.println("线程" + Thread.currentThread().getName()
+			System.out.println("线程组  " + Thread.currentThread().getThreadGroup().getName()
+					    +" 线程   "+Thread.currentThread().getName()
+					    +" 优先级  "+Thread.currentThread().getPriority()
+					    +" 状态  "+Thread.currentThread().getState()
 						+ ": ticket = " + ticket--);
 		}
 	}
@@ -58,8 +64,8 @@ class Ticket_Thread extends Thread {
 public class TicketDemo_Three {
 	public static void main(String[] args){
 		//因为Ticket_Thread类中已经对构造方法按照Thread类的种类进行重载，可以按照Thread的风格进行函数构造
-        new Ticket_Thread().start();  
-        new Ticket_Thread().start();  
-        new Ticket_Thread().start();  
+        new Ticket_Thread("1").start();  
+        new Ticket_Thread("2").start();  
+        new Ticket_Thread("3").start();  
     }  
 }
