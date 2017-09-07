@@ -2,6 +2,11 @@ package cn.edu.neu.xl.Proxy.Cglib;
 
 import cn.edu.neu.xl.Proxy.ForumServiceImpl;
 
+/**
+ * @author xl
+ * @created 2017_09_07
+ *
+ */
 public class TestForumService {
 	public static void main(String[] args) {  
 	      CglibProxy proxy = new CglibProxy(); 
