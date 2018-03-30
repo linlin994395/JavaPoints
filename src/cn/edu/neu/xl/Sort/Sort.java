@@ -32,8 +32,14 @@ public class Sort {
 	 */
 	
 	/*
+	 * 稳定性算法的意义：
+	 * 要排序的内容是一组原本按照价格高低排序的对象，如今需要按照销量高低排序，使用稳定性算法，可以使得想同销量的对象依旧保持着价格高低的排序展现，只有销量不同的才会重新排序。
+	 * 
+	 * */
+	
+	/*
 	 * 冒泡排序：时间复杂度 n*n    算法稳定性：稳定
-	 * 思想：将第一个记录的关键字和第二个记录的关键字进行比较，如果后面的比前面的小则交换，然后比较第二个和第三个，依次类推。
+	 * 思想：将第一个记录的关键字和第二个记录的关键字进行比较，如果前面的比后面的大则交换，然后比较第二个和第三个，依次类推。
 	 * 比完一趟，最大的那个已经放到了最后的位置，这样就可以对前面N-1个数再循环比较。
 	 */
 	public static void bubbleSort(int [] array){
@@ -79,35 +85,35 @@ public class Sort {
 	 * 插入排序,时间复杂度为 n*n  为稳定算法                对于一个已排序的序列，插入排序的时间复杂度为 n
 	 * 思想：每步将一个待排序元素，按其排序码的大小插入到前面已经排好的一组元素的适当位置，直到元素全部插入为止。
 	 */
-	public static void insertSort(int [] array,int beg,int end){
-		for (int i = 1; i < array.length; i++) {
-			if(array[i] <= array[i-1])
+	public static void insertSort(int [] array){
+		for (int i = 1; i < array.length; i++) { //从数组的第二个元素开始循环将数组中的元素插入
+			int insertNote = array[i];  //设置数组中的第2个元素为第一次循环要插入的数据
+			int j=i-1;
+			for(;j>=0 && insertNote < array[j];)  //insertNote<array[j]即插入到合适的位置，  此时 insertNote 大于等于  array[j]  小于 array[j+1]
 			{
-				int temp = array[i];
-				int j=i-1;
-				for(;j>=0 && temp < array[j];j--)  //temp<array[j]即插入到合适的位置，  此时 temp 大于等于  array[j]  小于 array[j+1]
-				{
-					array[j+1] = array[j]; 
-				}
-				array[j+1] = temp; 
+				array[j+1] = array[j];   // 如果要插入的元素小于第j个元素,就将第j个元素向后移动
+				j--;
 			}
+			array[j+1] = insertNote;     // 直到要插入的元素不小于第j个元素,将insertNote插入到数组中
 		}
 	}
 	
 	/*
-	 * 折半插入排序,时间复杂度为 nlogn  为稳定算法
+	 * 折半插入排序(二分插入排序法),时间复杂度为 n*n  为稳定算法
+	 * 是直接插入排序法的改良版，也需要执行i-1趟插入，不同之处在于，第i趟插入，先找出第i+1个元素应该插入的的位置，假定前i个数据是已经处于有序状态。
 	 * 
 	 */
-	public static void binaryInsertSort(int [] array,int beg,int end){
+	public static void binaryInsertSort(int [] array){
 		for (int i = 1; i < array.length; i++) {
-			int temp = array[i];
-			int low = 0, high = i-1;
+			int insertNote = array[i];
+			int low = 0, high = i-1;  //low为搜索范围的左边界，high为搜索范围的右边界
 			
 			//确定low位置，将此位置之后的所有元素后移
 			while(low<=high)
 			{
 				int mid = (low+high)/2;
-				if(temp < array[mid])   //注意一定是  <
+				// 比较中间位置数据和insertNote大小，以缩小搜索范围 
+				if(insertNote < array[mid])   //注意一定是  <
 				{
 					high = mid-1;
 				}
@@ -117,17 +123,18 @@ public class Sort {
 				}
 			}
 			
+			//将low~i处数据整体向后移动1位
 			for(int j= i;j>low;j--)
 			{
 				array[j] = array[j-1];
 			}
 			
-			array[low] = temp;
+			array[low] = insertNote;
 		}		
 	}
 	
 	/*
-	 * 希尔排序（最小增量排序） 算法稳定性：不稳定  时间复杂度：O（nlogn）～O（n2），平均时间复杂度大致是 O(n√n)
+	 * 希尔排序（最小增量排序） 算法稳定性：不稳定  时间复杂度：O（nlogn）～O（n2），平均时间复杂度是 O(nlogn)
 	 * 算法先将要排序的一组数按某个增量d（n/2,n为要排序数的个数）分成若干组，每组中记录的下标相差d。
 	 * 对每组中全部元素进行直接插入排序，然后再用一个较小的增量（d/2）对它进行分组，在每组中再进行直接插入排序。
 	 * 当增量减到1时，进行直接插入排序后，排序完成。
@@ -174,7 +181,8 @@ public class Sort {
 	}
 	
 	/*
-	 * 快排算法。时间复杂度为 nlogn 。为不稳定算法 ，基于分治法。
+	 * 快排算法。时间复杂度为 nlogn 。为不稳定算法 。
+	 * 基于分治法，是冒泡排序的改进型。
 	 */
 	public static void quickSort(int [] array,int beg,int end){  //end是指数组最后一个元素的位置
 		if(beg >= end || array == null)
@@ -196,6 +204,11 @@ public class Sort {
 		 * 由第一个非基准位置开始直到序列的最后进行迭代；当某一个元素的值比基准值小时，基准位置要加一，并且此时该元素的位置与基准位置不一致时，
 		 * 要进行位置互换,以保证基准位置本身及基准位置以前的数据都比基准值小（此时基准值在第一个元素的位置，之后要换回到它应该在的位置
 		 * 例子：21 25 49 25 16 08
+		 * 21 16 49 25 25 08
+		 * 21 16 08 25 25 49
+		 * 
+		 * 08 16 21 25 25 49
+		 * 
 		 */
 		for(int i = beg+1;i <= end;i++)
 		{
@@ -221,7 +234,7 @@ public class Sort {
 	
 	/*
 	 * 两路归并排序：时间复杂度为nlogn，为稳定的排序算法。  基于分治法。
-	 * 思想：将待排序的的元素序列分成两个长度相等的子序列，为每一个子序列排序，然后再将它们合并成一个序列。
+	 * 思想：将待排序的元素序列分成两个长度相等的子序列，为每一个子序列排序，然后再将它们合并成一个序列。
 	 * 先把待归并元素序列 array 复制到辅助数组 array2 中 ，再从 array2 中归并到 array 中;
 	 * array2 是新的序列，array中有两个排好序的有序序列。(从beg到mid 从mid+1到end)，此时把array中的元素复制到array2中，
 	 * 使array2中有两个排好序的序列，然后从array2归并到array中
